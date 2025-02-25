@@ -6,6 +6,7 @@
 //! Strict mode: “use strict”;
 // Wir schreiben es am Anfang des Skripts. Um ein sicheres JavaScript zu schreiben. Um versehentliche Fehler zu vermeiden. Der strikte Modus verbietet uns, bestimmte Dinge zu tun, und erzeugt sichtbare Fehler in der Konsole.
 
+
 //! Variables, Values
 // in einer Variable speichern wir einen Wert.
 // Die VariableName sollte eindeutig sein und nicht mit einem Großbuchstaben beginnen und kein reserviertes Schlüsselwort in JS sein
@@ -254,8 +255,6 @@ const greet = (greeting) => {
 
 const sayHello = greet("Hello");
 console.log(sayHello("Alice"));
-
-
 
 
 // 🔹 Call, Apply, and Bind Methods in JavaScript
@@ -1338,13 +1337,41 @@ console.log(firstParagraph.nextElementSibling);
 
 
 // ------------------------------------------------------------------------------------
-//! ------------------- (Numbers, Dates, Intl, Timers) --------------------------------
+//! ------------------- (Dates, Intl, Timers) --------------------------------
 // ------------------------------------------------------------------------------------
 
+function getFormattedDate() {
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
+}
+
+console.log(getFormattedDate()); // Example output: "24/02/2025 14:30"
+
+//! setTimeout() 
+// it runs one time after 2 seconds
+
+const timeout = setTimeout(() => {
+    console.log("Hello");
+    clearTimeout(timeout)
+}, 2000)
+
+
+//! setInterval() : good explanation in lesson 1921 section 12
+// it keeps running until we stop it
+const Interval = setInterval(() => {
+    console.log("Hello");
+    clearInterval(Interval)
+}, 2000)
 
 
 // ------------------------------------------------------------------------------------
-//! --------------- (Numbers, Dates, Intl, Timers) Finished ---------------------------
+//! --------------- (Dates, Intl, Timers) Finished ---------------------------
 // ------------------------------------------------------------------------------------
 
 
