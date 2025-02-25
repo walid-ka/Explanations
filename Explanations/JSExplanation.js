@@ -1,7 +1,5 @@
-// Install Extension called Quokka.js - the cmd + shift + p (search Quokka, and start)
+// Install Extension called Quokka.js - the cmd + shift + p (search Quokka, and start on current file)
 
-// HTML : Inhalt der Seite (Text, Bilder, Schaltflächen (buttons)..), HTML sollte semantisch sein: Gut für Zugänglichkeit, SEO …
-// CSS : für styling des HTML, wie soll aussehen. zum Festlegen des Layouts von Webseiten.
 // JavaScript ist eine Programmiersprache, kann sowohl HTML als auch CSS aktualisieren und ändern. diese 3 Technologien arbeiten also alle zusammen,um dynamische Websites und Webanwendungen zu erstellen.  Sie kann Daten berechnen, bearbeiten und validieren.
 
 "use strict"
@@ -31,6 +29,9 @@ console.log(typeof String(calculated))
 
 console.log(typeof convertString)
 console.log(typeof Number(convertString))
+
+// new way (+) instead Number(...) 
+console.log(+convertString);
 
 //! Truthy and Falsy values : Falsy (0, "", null, undefined, NaN, false) | Truth : all the rest
 
@@ -175,7 +176,7 @@ console.log(fn2("Bob"));
 const greetArrow = (name) => `Hello, ${name}!`;
 console.log(greetArrow("Charlie"));
 
-// 🔹 4. Immediately Invoked Function Expression (IIFE)
+// 🔹 4. Immediately Invoked Function Expression (IIFE), it runs only once, never again
 (function () {
     console.log("This function runs immediately!");
 })();
@@ -270,17 +271,88 @@ const me = {
 
 const person2 = { name: "Alice", age: 25 };
 
-// ✅ call() Method (Pass arguments one by one) : Calls a function with a given 'this' value and arguments passed individually.
+// call() Method (Pass arguments one by one) : Use when you want to invoke a function immediately and pass arguments one by one.
+// When you know the number of arguments and can pass them individually.
+// Arguments are passed individually (comma-separated).
 me.greet.call(person2, "Chicago"); // Output: Hello, my name is Alice, I am 25 years old and I live in Chicago.
 
-// ✅ apply() Method (Pass arguments as an array) : Calls a function with a given 'this' value and arguments in an array.
+// apply() Method (Pass arguments as an array) : Use when you want to invoke a function immediately and pass arguments as an array.
+// When the number of arguments is dynamic or stored in an array.
 me.greet.apply(person2, ["New York"]); // Output: Hello, my name is Alice, I am 25 years old and I live in New York.
 
-// ✅ bind() Method (Creates a new function with 'this' bound to a specific object) 
+// bind() Method (Use when you want to create a new function with a specific this value but invoke it later.) 
+// When you don’t want to call the function immediately but instead store it for later use.
+// When working with event handlers or callbacks.
 const boundGreet = me.greet.bind(person2, "Los Angeles");
 boundGreet(); // Output: Hello, my name is Alice, I am 25 years old and I live in Los Angeles.
 
+/*
+| Method  | Execution               | Arguments Format             | Returns a New Function? |
+|---------|-------------------------|------------------------------|-------------------------|
+| call()  | Immediately             | Individual args (arg1, arg2) | ❌ No                   |
+| apply() | Immediately             | Array of args ([arg1, arg2]) | ❌ No                   |
+| bind()  | Later (when invoked)    | Individual args (arg1, arg2) | ✅ Yes                  |
 
+🚀 **Rule of Thumb:**
+- Use call() when arguments are passed **individually** and you need to execute immediately.
+- Use apply() when arguments are in an **array** and you need to execute immediately.
+- Use bind() when you need to **store the function for later use**.
+*/
+
+//! Closures : 
+// A closure is a function that remembers the variables from its outer scope,
+// even after the outer function has finished executing.
+
+function outerFunction(outerVariable) {
+    return function innerFunction(innerVariable) {
+        console.log(`Outer: ${outerVariable}, Inner: ${innerVariable}`);
+    };
+}
+
+const newFunction = outerFunction("Hello");
+newFunction("World");
+
+// - The inner function retains access to the outer function's variables.
+// - Even after the outer function has returned, the inner function "remembers" the outer variable.
+function counter() {
+    let count = 0;
+    return function () {
+        count++;
+        console.log(`Count: ${count}`);
+    };
+}
+
+const increment = counter();
+increment();
+increment();
+
+// ✅ Practical Uses of Closures
+// 1️⃣ Data Encapsulation (Creating private variables)
+// 2️⃣ Memoization (Remembering previous calculations)
+// 3️⃣ Event Listeners (Keeping state between executions)
+
+// Example: Creating private variables
+function createUser(username) {
+    let score = 0;
+    return {
+        increment: function () {
+            score++;
+            console.log(`${username}'s score: ${score}`);
+        },
+        getScore: function () {
+            return score;
+        }
+    };
+}
+
+const user1 = createUser("Alice");
+user1.increment(); // Output: Alice's score: 1
+user1.increment(); // Output: Alice's score: 2
+console.log(user1.getScore()); // Output: 2
+
+// ------------------------------------------------------------------------------------
+//! ------------------------- Functions Finished---------------------------------------
+// ------------------------------------------------------------------------------------
 
 
 // ------------------------------------------------------------------------------------
@@ -358,9 +430,9 @@ console.log(+stringNum);
 // or console.log(Number(stringNum));
 
 
-
-
-
+// ------------------------------------------------------------------------------------
+//! ------------------------ Strings Finished -----------------------------------------
+// ------------------------------------------------------------------------------------
 
 
 
@@ -382,6 +454,15 @@ console.log(`the index of the value 1 is ${values.indexOf(1)}`)
 console.log(values.includes(1))
 values.includes(10) ? console.log("that passed number exist in the array") : console.log("that passed number doesnt exist in the array")
 
+// Creating an Array 
+// or manually : const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+// const Arr =  new Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+// best options:
+// const arr = Array.from({length: 7}, () => 1) // [1, 1, 1, 1, 1, 1, 1]
+// const arr = Array.from({length: 7}, (cur, i) => i+1) // [1, 2, 3, 4, 5, 6, 7]
+// const randomArr = Array.from({ length: 10 }, () => Math.round(Math.random() * 500)) // [ 354, 96, 225, 253, 44, 460, 238, 395, 22, 475 ]
+
 // TODO: ADD 
 // Hinzufügen (from original array)
 values.push(5); values
@@ -393,10 +474,39 @@ values.pop(); values
 values.shift(); values
 
 // TODO: CONCAT 
-// (new array) without modifying the original array or string
-let myArr = [1, 2, 3]
-const myNewArr = myArr.concat([4, 5], [6, 7, 8])
+// um zwei Arrays oder mehr zu verketten. (neues Array – Original unverändert)
+let myArr1 = [1, 2, 3];
+let myArr2 = [4, 5];
+let myArr3 = [6, 7, 8]
+const myNewArr = myArr1.concat(myArr2, myArr3)
 console.log(myNewArr)
+// or const myNewArr = [...myArr1, ...myArr2, ...myArr3]
+
+
+//TODO: Object.groupBy()  2025
+// allows you to group elements of an array based on a specified criterion.
+// - Useful for categorizing data without manual loops.
+// - Takes an array as the first argument.
+// - Takes a callback function as the second argument.
+// - The callback determines the grouping key.
+// - **Note:** As of 2025, this is still a proposal and may not be supported in all environments.
+
+// Example: Grouping an array of numbers by even and odd
+const myNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const groupedNumbers = Object.groupBy(myNumbers, num => (num % 2 === 0 ? "even" : "odd"));
+console.log(groupedNumbers);
+
+// Example: Grouping an array of objects by a property
+const people = [
+    { name: "Alice", age: 25, },
+    { name: "Bob", age: 30 },
+    { name: "Charlie", age: 25 },
+    { name: "David", age: 30 }
+];
+
+const groupedByAge = Object.groupBy(people, user => user.age);
+console.log(groupedByAge);
+
 
 // TODO: FILTER (new Array)
 const userArr = [
@@ -417,7 +527,7 @@ const evenNum = numbers.filter(even)  // [ 100, 20, 34, 6, 78 ]
 const compaNum = numbers.filter(num) // [ 34, 45 ]
 
 // TODO: FIND 
-// (original array) - um nach dem ersten Element zu suchen, das eine Bedingung erfüllt 
+// um nach dem ersten Element zu suchen, das eine Bedingung erfüllt. (Original verändert)
 // to search for the first element that meet a condition
 const findNum = numbers.find(num => num < 45) // 1
 
@@ -433,10 +543,45 @@ const persons = [
     { firstName: "Felix", lastName: "Krause", age: 35 }
 ];
 
-
 persons.map(person => person.age * 2) // [ 50, 60, 44, 56, 70 ]
 persons.map(person => person.firstName.toUpperCase()) // [ 'LUKAS', 'ANNA', 'MAX', 'SOPHIE', 'FELIX' ]
 persons.map(person => person.firstName === "Walid") // [true, false, false, false, false]
+
+// TODO: flatMap()
+// `flatMap()` is a combination of `map()` and `flat()`. It maps each element
+// using a callback function and then flattens the result into a new array.
+// It only flattens one level deep.
+// More efficient than using `map().flat(1)` separately.
+// - Great for extracting, transforming, and restructuring complex data.
+
+//  Example: Flattening an array of arrays with transformations
+const guys = [
+    { name: "Alice", scores: [85, 90, 78] },
+    { name: "Bob", scores: [88, 76, 95] },
+    { name: "Charlie", scores: [92, 89, 85] }
+];
+
+// Using flatMap() to extract and flatten scores
+// instead of const flatenedArr = guys.map(student => student.scores).flat(). We do
+const flatenedArr = guys.flatMap(student => student.scores);
+console.log(flatenedArr);
+
+//  Example: Expanding nested arrays within an array
+const data = [
+    ["apple", "banana"],
+    ["cherry", "date"],
+    ["elderberry", "fig"]
+];
+
+const flattenedData = data.flatMap(fruitGroup => fruitGroup);
+console.log(flattenedData);
+
+
+// Difference Between map() and flatMap()
+const nestedArray = [[1, 2], [3, 4], [5, 6]];
+console.log(nestedArray.map(innerArr => innerArr));
+
+console.log(nestedArray.flatMap(innerArr => innerArr));
 
 // TODO: FOREACH 
 // Better than for loop : wird verwendet, um eine Funktion für jedes Element in einem Array auszuführen. Sie verändert das ursprüngliche Array nicht, sondern dient nur zur Iteration.
@@ -457,7 +602,7 @@ fruits.forEach(fruit => {
 
 
 // TODO: JOIN 
-// wird verwendet, um alle Elemente eines Arrays in eine Zeichenkette zu verwandeln, wobei ein bestimmtes Trennzeichen (separator) zwischen den Elementen eingefügt wird.
+// um alle Elemente eines Arrays in eine String zu verwandeln, wobei ein bestimmtes Trennzeichen (separator) zwischen den Elementen eingefügt wird. (neues Array – Original unverändert)
 // is used to convert all elements of an array into a string, inserting a specific separator between the elements.
 
 console.log(fruits.join());
@@ -466,23 +611,22 @@ console.log(fruits.join(" - "));
 console.log(fruits.join(""));
 
 // TODO: SLICE
-// (new array) : wird verwendet, um einen Teil eines Arrays oder einer Zeichenkette zu extrahieren, ohne das ursprüngliche Array oder die ursprüngliche Zeichenkette zu verändern.
-// is used to extract part of an array or string without modifying the original array or string.
-console.log(fruits.slice(1, 4));
+// wird verwendet, um einen Teil eines Arrays oder einer String zu extrahieren. (neues Array – Original unverändert)
+console.log(fruits.slice(1, 2));
 console.log(fruits.slice(2));
-console.log(fruits.slice(-3));
-console.log(fruits.slice());
+console.log(fruits.slice(-1));
+console.log(fruits.slice()); // to create a copy or with [...arr]
 
 const text = "JavaScript";
-
 console.log(text.slice(0, 4)); // "Java"
 console.log(text.slice(4));    // "Script"
 console.log(text.slice(-6));   // "Script"
 
 // TODO: SPLICE
-// wird verwendet, um Elemente hinzuzufügen, zu entfernen oder zu ersetzen. Im Gegensatz zu slice() verändert splice() das ursprüngliche Array.
-// is used to add, remove or replace elements. Unlike slice(), splice() modifies the original array.
+// (Original verändert) wird verwendet, um Elemente hinzuzufügen, zu entfernen oder zu ersetzen. 
 // array.splice(start, deleteCount, item1, item2, ...);
+// Better to work on a copy and not effect on original we write const removed = vigtables.slice().splice(1, 2) or  const const removed = vigtables.toSpliceD(1, 2)
+
 
 const vigtables = ["Apfel", "Banane", "Erdbeere", "Mango", "Traube"];
 
@@ -493,11 +637,11 @@ console.log(vigtables);
 console.log(removed);
 
 const animals = ["dog", "cat", 'elephant'];
-console.log(animals.splice(1, 0, "lion", "tiger"))
+animals.splice(1, 0, "lion", "tiger")
+console.log(animals);
 
 // TODO: REDUCE
 // es ist ein Akkumulator wie ein Schneeball, der alle Elemente zusammenzählt. Dasselbe wie eine „for loop“, aber besser.
-// its an accumulator like a snowball. adding all elements together. same like "for loop" but better. 
 // array.reduce(callback, initialValue)
 
 const myNum = [1, 3, 4, 5, 8]
@@ -507,19 +651,18 @@ myNum.reduce((x, y) => x + y) // 21
 const calcMax = myNum.reduce((x, y) => {
     if (x > y) return x;
     else return y
-}, 0)
+}, myNum[0])
 
 console.log(calcMax)
 
 
 // TODO: SORT
-// (original array). 
-// If we want to make a copy and not effect on original we write const SortedElements = arr.slice().sort(..)
-// um ein Array mit nur Zahlen oder nur Zeichenfolgen aufsteigend oder absteigend zu klassifizieren
+// (Original verändert)
+// um ein Array mit nur Zahlen oder nur Strings aufsteigend oder absteigend zu klassifizieren
 // to classify ascending or descending an array with only numbers or only strings (default is  aschending)
+// Better to work on a copy and not effect on original we write const SortedElements = arr.slice().sort(..) or const SortedElements = arr.toSorted(..)
 
 const nums = [1, 5, 7, 8, 10]
-console.log(nums.sort())
 
 // descending order  
 console.log(nums.sort((a, b) => b - a))
@@ -539,11 +682,13 @@ persons.sort((a, b) => a.age - b.age); // Nach Alter aufsteigend sortieren
 console.log(persons);
 
 // TODO: REVERSE
-// (original array)
+// (Original verändert)
+// Better to work on a copy and not effect on original we write  reversedArr.slice().reverse() or reversedArr.toReversed()
 
 const reversedArr = ["John", "Piter", "Ali", "Walid"]
+reversedArr.reverse(); // [ 'Walid', 'Ali', 'Piter', 'John' ]
 
-console.log(reversedArr.reverse());
+
 
 // TODO: SOME & EVERY (true, false)
 // some() Gibt true zurück, wenn mindestens ein Element die Bedingung erfüllt
@@ -595,7 +740,7 @@ console.log(filteredUsers);
 
 // TODO:  AT()
 
-console.log(fruits.at(1));   // "Banane" (zweites Element)
+console.log(fruits.at(1));  // same as fruits[0]  // "Banane" (zweites Element)
 console.log(fruits.at(-1));  // "Mango" (letztes Element)
 console.log(fruits.at(-2));  // "Kirsche" (vorletztes Element)
 
@@ -627,7 +772,7 @@ for (let i = 0; i < fruits.length; i++) {
 // ✅ Vorteil: Einfach zu lesen, keine manuelle Indexverwaltung.
 // ❌ Nachteil: Kann nicht mit break oder continue unterbrochen werden.
 fruits.forEach((fruit, i) => {
-    console.log(`${i}: ${fruit}`);
+    console.log(`${i + 1}: ${fruit}`);
 });
 
 
@@ -697,9 +842,9 @@ console.log("Temperature Amplitude:", calcTempAmplitude(temps));
 
 
 
-
-
-
+// ------------------------------------------------------------------------------------
+//! ------------------------- Arrays Finished -----------------------------------------
+// ------------------------------------------------------------------------------------
 
 
 
@@ -1191,6 +1336,16 @@ console.log(document.body.children);
 // Get next sibling element
 console.log(firstParagraph.nextElementSibling);
 
+
+// ------------------------------------------------------------------------------------
+//! ------------------- (Numbers, Dates, Intl, Timers) --------------------------------
+// ------------------------------------------------------------------------------------
+
+
+
+// ------------------------------------------------------------------------------------
+//! --------------- (Numbers, Dates, Intl, Timers) Finished ---------------------------
+// ------------------------------------------------------------------------------------
 
 
 
