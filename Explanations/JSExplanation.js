@@ -1,4 +1,4 @@
-// Install Extension called Quokka.js - the cmd + shift + p (search Quokka, and start on current file)
+// i Install Extension called Quokka.js - the cmd + shift + p (search Quokka, and start on current file)
 
 // JavaScript ist eine Programmiersprache, kann sowohl HTML als auch CSS aktualisieren und ändern. diese 3 Technologien arbeiten also alle zusammen,um dynamische Websites und Webanwendungen zu erstellen.  Sie kann Daten berechnen, bearbeiten und validieren.
 
