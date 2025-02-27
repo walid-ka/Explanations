@@ -349,9 +349,15 @@ user1.increment(); // Output: Alice's score: 1
 user1.increment(); // Output: Alice's score: 2
 console.log(user1.getScore()); // Output: 2
 
-// ------------------------------------------------------------------------------------
-//! ------------------------- Functions Finished---------------------------------------
-// ------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 
 // ------------------------------------------------------------------------------------
@@ -429,9 +435,13 @@ console.log(+stringNum);
 // or console.log(Number(stringNum));
 
 
-// ------------------------------------------------------------------------------------
-//! ------------------------ Strings Finished -----------------------------------------
-// ------------------------------------------------------------------------------------
+
+
+
+
+
+
+
 
 
 
@@ -841,9 +851,13 @@ console.log("Temperature Amplitude:", calcTempAmplitude(temps));
 
 
 
-// ------------------------------------------------------------------------------------
-//! ------------------------- Arrays Finished -----------------------------------------
-// ------------------------------------------------------------------------------------
+
+
+
+
+
+
+
 
 
 
@@ -931,7 +945,6 @@ Object.freeze(person);
 //person.age = 40; // ❌ Änderung wird ignoriert!
 
 console.log(person.age); // 31 (unverändert)
-
 
 
 
@@ -1034,11 +1047,150 @@ console.log(details);
 
 
 
+// ------------------------------------------------------------------------------------
+//! ------------------ Async/Await and Promises, AJAX and JSON  -----------------------
+// ------------------------------------------------------------------------------------
+
+//! Synchronous vs Asynchronous JavaScript
+
+//  Synchronous : Code is executed line by line, blocking further execution until the current task is completed. (Long-running )
+console.log("Start");
+console.log("Middle");
+console.log("End");
+
+//  Asynchronous : 
+// Uses callbacks, promises, or async/await to handle tasks that take time (e.g., API calls, file reading, setTimeout).
+console.log("Start");
+setTimeout(() => {
+    console.log("Delayed Message");
+}, 2000);
+console.log("End");
+
+//! AJAX
+// AJAX call:  Old method for sending HTTP requests without refreshing the page
+// XMLHttpRequest : So old better to use modern ES6 (promises to avoid the call back hell) 
+// So we have to use Fetch API
 
 
+//! JSON
+// ✔ JSON is a text format used to store and exchange data.
+// ✔ It is commonly used in APIs to exchange data between a client and a server.
+// ✔ JSON uses key-value pairs like JavaScript objects but has stricter formatting (Keys must be strings enclosed in double quotes // Values can be strings, numbers, arrays, booleans, null, or other JSON objects.)
+// ✔ JSON.parse() converts JSON to a JavaScript object.
+// ✔ JSON.stringify() converts a JavaScript object to a JSON string.
+// ✔ Used widely in APIs for data communication.
 
 
+// Example of JSON Data:
+const jsonString = `
+{
+    "name": "Alice",
+    "age": 25,
+    "isStudent": false,
+    "hobbies": ["Reading", "Gaming", "Traveling"],
+    "address": {
+        "city": "New York",
+        "country": "USA"
+    }
+}
+`;
 
+const jsonData = JSON.parse(jsonString); // Converts JSON string to JavaScript object
+
+console.log(jsonData.name); // Output: Alice
+console.log(jsonData.hobbies[1]); // Output: Gaming
+
+
+// If we need to send data as JSON, we convert JavaScript objects to a JSON string.
+const jsObject = {
+    name: "Bob",
+    age: 30,
+    city: "Los Angeles"
+};
+
+const jsonFormatted = JSON.stringify(jsObject); // Converts JS object to JSON string
+console.log(jsonFormatted); // Output: {"name":"Bob","age":30,"city":"Los Angeles"}
+
+
+//! API (Application Programming Interface) 
+// is a set of rules that allows different software applications to communicate.
+// APIs enable developers to fetch or send data between applications, often using HTTP requests. some popular APIs (Google maps, paypal...)
+
+//! Promise
+// A Promise in JavaScript is an object that represents the eventual completion (or failure) of an asynchronous operation and its resulting value.
+// States of a Promise:
+// Pending - The initial state, before the operation is completed.
+// Fulfilled - The operation completed successfully, and a value is available.
+// Rejected - The operation failed, and an error is available.
+// Why Use Promises?
+// Helps avoid callback hell (nested callbacks that become hard to read and maintain).
+// Provides a cleaner and more structured way to handle asynchronous operations.
+
+// Using Promises with Fetch API (Better with async/await)
+fetch("https://jsonplaceholder.typicode.com/posts/1")
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Network response was not OK");
+        }
+        return response.json();
+    })
+    .then(data => console.log("Fetched Data:", data))
+    .catch(error => console.log("Fetch Error:", error));
+
+
+//! async/await or axios or React-Query or Next.js fetch
+// is a modern way to handle Promises, making asynchronous code look more like synchronous code.
+
+async function fetchData() {
+    try { // try/catch for Error Handling (better than ".then" method)
+
+        // Sending a request to the API
+        const response = await fetch("https://jsonplaceholder.typicode.com/posts/1"); // await the result of the promise when its resolved gives "response". u can console.log(response) to see the Response
+
+        // Checking if the response is okay (status 200-299)
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parsing response data as JSON
+        const data = await response.json();
+
+        // Logging the fetched data
+        console.log("Fetched Data:", data);
+
+    } catch (error) {
+        // Handling errors such as network failures or API errors
+        console.log("Fetch error:", error.message);
+        // will use toast or smth to show the error.message
+    } finally {
+        console.log("Fetch operation completed.");
+    }
+}
+
+//! Modules 
+
+// - Modules allow us to break JavaScript code into separate files.
+// - They help in keeping the code clean, reusable, and easier to manage.
+// - A module can export functions, objects, or variables that can be used in other files.
+// - Encapsulation: Each module has its own scope.
+// - Reusability: Code can be shared across multiple files.
+// - Maintainability: Makes debugging and code management easier.
+// - Performance: Only loads required modules, improving efficiency.
+// ✔ Use export to share variables, functions, or objects.
+// ✔ Use import to use exported modules in other files.
+// - Work similarly to how React components are structured, just react have html inside .js file
+// You can look Section 17, if you want to learn them, but you already know React
+
+//! NPM 
+
+// NPM (Node Package Manager) is the default package manager for JavaScript, used to install, manage, and share libraries and tools for Node.js and frontend development. 
+// 📦 Package Management – Install and manage JavaScript libraries.
+// 🚀 Dependency Management – Handles versions and updates for installed packages.
+// 🔄 Automation – Allows running scripts for build processes (e.g., starting a server, testing). 
+// 🌍 Open-Source Repository – Provides access to a massive collection of free packages (over 2 million).
+// package.json – A configuration file that keeps track of installed dependencies.
+
+//! Clean, Modern Code
 
 // ------------------------------------------------------------------------------------
 //! ----------------------------------- Sets & Maps -----------------------------------
@@ -1268,6 +1420,8 @@ firstParagraph.innerHTML = "<b>Bold Text</b>";
 
 // Change style
 title.style.color = "blue";
+title.style.fontSize = "24px";
+title.style.backgroundColor = "yellow";
 
 // Add and remove CSS classes
 title.classList.add("highlight");
@@ -1275,7 +1429,25 @@ title.classList.remove("highlight");
 
 /*
 ====================================
-🔹 3. Creating & Removing Elements
+🔹 3. Working with Attributes
+====================================
+*/
+
+// Set attribute
+title.setAttribute("data-info", "This is a title");
+
+// Get attribute
+console.log(title.getAttribute("data-info")); // Output: This is a title
+
+// Remove attribute
+title.removeAttribute("data-info");
+
+// Check if an element has an attribute
+console.log(title.hasAttribute("id")); // Output: true
+
+/*
+====================================
+🔹 4. Creating & Removing Elements
 ====================================
 */
 
@@ -1287,16 +1459,13 @@ document.body.appendChild(newDiv); // Add to the page
 // Remove an element
 // document.body.removeChild(newDiv); // Uncomment to remove
 
-// createElement(), appendChild(), removeChild()
-
 /*
 ====================================
-🔹 4. Handling Events
+🔹 5. Handling Events
 ====================================
 */
 
 // Add click event listener to title
-
 title.addEventListener("click", () => {
     alert("Title clicked!");
 });
@@ -1309,7 +1478,7 @@ button.addEventListener("click", () => {
 
 /*
 ====================================
-🔹 5. Handling Form Inputs
+🔹 6. Handling Form Inputs
 ====================================
 */
 
@@ -1322,7 +1491,7 @@ button.addEventListener("click", () => {
 
 /*
 ====================================
-🔹 6. Traversing the DOM
+🔹 7. Traversing the DOM
 ====================================
 */
 
@@ -1336,8 +1505,9 @@ console.log(document.body.children);
 console.log(firstParagraph.nextElementSibling);
 
 
+
 // ------------------------------------------------------------------------------------
-//! ------------------- (Dates, Intl, Timers) --------------------------------
+//! ---------------------------- (Dates, Intl, Timers) --------------------------------
 // ------------------------------------------------------------------------------------
 
 function getFormattedDate() {
@@ -1370,17 +1540,180 @@ const Interval = setInterval(() => {
 }, 2000)
 
 
-// ------------------------------------------------------------------------------------
-//! --------------- (Dates, Intl, Timers) Finished ---------------------------
-// ------------------------------------------------------------------------------------
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ------------------------------------------------------------------------------------
-//! ----------------------------- JS Behinde the Scene --------------------------------
+//! ----------------- Object-Oriented Programming (OOP) in JS -------------------------
 // ------------------------------------------------------------------------------------
 
-// Section 8
+// Its to orgnize code and make it more flexible
+// Everything in JS is an Object
+// OOP is a programming paradigm based on objects, which can contain properties (attributes) and methods (functions).
+// - OOP helps structure code for reusability and maintainability.
+// - JavaScript supports OOP via Prototypes and ES6 Classes.
+// - Objects can be created using Object Literals, Constructor Functions, and Classes.
+// - ES6 introduced `class` and `extends` to simplify OOP in JavaScript.
+// - A class in JavaScript is a blueprint for creating objects. It encapsulates data (properties) and behaviors (methods) into a single unit. Classes were introduced in ES6 to simplify working with objects and inheritance
+
+/* 
+
+! Key Features of Classes
+
+? Constructor Method (constructor)
+A special method for initializing new objects.It gets called automatically when a new instance is created.
+
+? Instance Properties & Methods
+Properties are assigned inside the constructor method.
+Methods define the behavior of objects.
+
+? Class Inheritance (extends)
+A class can inherit from another class using extends.
+The super() function calls the parent class’s constructor.
+
+? Encapsulation (#privateProperties)
+Properties can be private using # to restrict access outside the class.*/
+
+/*
+====================================
+🔹 1. Four Core Principles of OOP
+====================================
+*/
+
+// 1️⃣ Encapsulation: Bundling data (properties) and methods in a single unit (object/class). Keeping Properties and Methods private inside the class, so they are not accessible outside the class
+// 2️⃣ Abstraction: Hiding details and exposing only necessary parts.
+// 3️⃣ Inheritance: One object gets properties and methods from another.
+// 4️⃣ Polymorphism: Methods can be overridden to provide different behaviors.
+
+
+/*
+====================================
+🔹 2. Creating Objects in JavaScript
+====================================
+*/
+
+// ✅ Object Literal
+const person = {
+    name: "Alice",
+    age: 25,
+    greet() {
+        console.log(`Hello, my name is ${this.name}`);
+    }
+};
+person.greet();
+
+// ✅ Constructor Function
+function Person(name, age) {
+    this.name = name;
+    this.age = age;
+    this.greet = function () {
+        console.log(`Hello, my name is ${this.name}`);
+    };
+}
+const person1 = new Person("Bob", 30);
+person1.greet();
+
+// ✅ ES6 Class
+class Animal {
+    constructor(name, species) {
+        this.name = name;
+        this.species = species;
+    }
+    makeSound() {
+        console.log(`${this.name} makes a noise.`);
+    }
+}
+const dog = new Animal("Buddy", "Dog");
+dog.makeSound();
+
+/*
+====================================
+🔹 3. Inheritance (Extending Classes)
+====================================
+*/
+
+class Dog extends Animal {
+    constructor(name, breed) {
+        super(name, "Dog");
+        this.breed = breed;
+    }
+    makeSound() {
+        console.log(`${this.name} barks!`);
+    }
+}
+const myDog = new Dog("Rex", "Golden Retriever");
+myDog.makeSound(); // Rex barks!
+
+/*
+====================================
+🔹 4. Polymorphism (Method Overriding)
+====================================
+*/
+
+class Cat extends Animal {
+    makeSound() {
+        console.log(`${this.name} meows!`);
+    }
+}
+const myCat = new Cat("Whiskers", "Cat");
+myCat.makeSound(); // Whiskers meows!
+
+/*
+====================================
+🔹 5. Encapsulation (Private Properties)
+====================================
+*/
+
+class BankAccount {
+    #balance; // Private property
+    constructor(owner, balance) {
+        this.owner = owner;
+        this.#balance = balance;
+    }
+    deposit(amount) {
+        this.#balance += amount;
+        console.log(`Deposited ${amount}, new balance: ${this.#balance}`);
+    }
+    getBalance() {
+        return this.#balance;
+    }
+}
+const myAccount = new BankAccount("Alice", 1000);
+myAccount.deposit(500);
+console.log(myAccount.getBalance()); // 1500
+
+
+//! PS:  Mapty ptoject for practicing
+
+
+// ------------------------------------------------------------------------------------
+//! ------------------ JS Behinde the Scene  - Section 8 - ----------------------------
+// ------------------------------------------------------------------------------------
 
 
 

@@ -1,9 +1,4 @@
-h1 {
-    color: brown;
-
-}
-
-.main-section {
-    background-color: beige;
-    color: green;
+.highlight {
+    color: red;
+    font-weight: bold;
 }
