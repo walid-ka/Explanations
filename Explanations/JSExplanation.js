@@ -1618,14 +1618,14 @@ Properties can be private using # to restrict access outside the class.*/
 */
 
 // ✅ Object Literal
-const person = {
+const aPerson = {
     name: "Alice",
     age: 25,
     greet() {
         console.log(`Hello, my name is ${this.name}`);
     }
 };
-person.greet();
+aPerson.greet();
 
 // ✅ Constructor Function
 function Person(name, age) {
@@ -1635,8 +1635,8 @@ function Person(name, age) {
         console.log(`Hello, my name is ${this.name}`);
     };
 }
-const person1 = new Person("Bob", 30);
-person1.greet();
+const aPerson1 = new Person("Bob", 30);
+aPerson1.greet();
 
 // ✅ ES6 Class
 class Animal {
