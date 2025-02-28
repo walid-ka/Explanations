@@ -3,17 +3,45 @@
 
 <head>
     <title>DOM Example</title>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="src/sass/main.scss">
 </head>
 
 <body>
+
+    <header class="header">
+        <div class="header__logo-box">
+            <img src="img/logo-white.png" alt="Logo" class="header__logo">
+        </div>
+
+        <div class="header__text-box">
+            <h1 class="heading-primary">
+                <span class="heading-primary--main">Outdoors</span>
+                <span class="heading-primary--sub">is where life happens</span>
+            </h1>
+
+            <a href="#section-tours" class="btn btn--white btn--animated">Discover our tours</a>
+        </div>
+    </header>
 
     <h1 id="title">Click me!</h1>
     <p class="text">This is a paragraph.</p>
     <input type="text" id="name" placeholder="Enter name">
     <button id="btn">Click Me</button>
 
-    <script src="/script.js">
+    <div>
+        <button class="button">Default Button</button>
+        <button class="button small">Small Button</button>
+        <button class="button large">Large Button</button>
+        <button class="button outline">Outline Button</button>
+        <button class="button rounded">Rounded Button</button>
+        <button class="button full-width">Full-Width Button</button>
+        <button class="button icon">
+            <i class="fas fa-check"></i> Icon Button
+        </button>
+        <button class="button disabled" disabled>Disabled Button</button>
+    </div>
+
+    <script src="src/js/script.js">
 
     </script>
 

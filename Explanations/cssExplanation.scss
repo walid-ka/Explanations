@@ -1,0 +1,307 @@
+/* CSS (Cascading Style Sheets): für styling des HTML, wie soll aussehen. zum Festlegen des Layouts von Webseiten. */
+
+//! Specifity ⬇️ 
+// important! (Not Recommended - only when the layout acting strange),
+// inline styles (Not Recommended),
+// id (#text) (should be unique - not reusable),
+// class (.hero) (reusable) | attribute (<input>, a) | Pseudo-Class (:) (:active, :checked, a:hover, a:visited, input:focus), 
+// type (p {}) | Pseudo elements (::) (p::selector, p::first-letter, ::before, ::after, nth-last-of-type(3), ::placeholder)
+
+
+//! Units
+/*  
+Relative units such (rem, %) are the best choice for website. For more details: ask chatGPT what’s the best units to use for website (px, em, rem…).
+Related it means it’s related for something it’s related for parents
+
+px - Avoid for font-sizes. I use px for small details like borders & shadows
+rem - my go to choice for font-sizes and often padding/margin
+% - useful for defining layouts and widths
+wh/vw - used for larger layout concerns
+*/
+
+
+//! selector
+.hero {
+    /* selector: applies to elements with the class 'hero' / property : value */
+    height: 100vh;
+    background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.8), rgba(40, 180, 131, 0.8)), url(../example), no-repeat center / cover fixed;
+    background-position: top;
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ID Selector (applies to the element with id 'main-title') */
+#main-title {
+    text-align: center;
+    font-size: 2em;
+    color: #007bff;
+}
+
+/* Grouping Selectors (applies the same styles to multiple elements) */
+h1,
+h2,
+h3 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+//! Box Model
+/* 
+jedes Element hat ein Boxmodell
+Content - Padding (inside spacing) - Border - Margin (outside spacing) 
+*/
+
+.box {
+    width: 300px;
+    padding: 20px;
+    border: 2px solid #007bff;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+}
+
+//! Positioning & Layout
+/*
+static, 
+relative, 
+absolute (relative to the parents), 
+Fixed Position (relative to the viewport) 
+Flexbox (modern way to align elements - small element)
+Grid Layout (for complex layouts - big layout like page layout)
+Float for free positioning
+*/
+
+
+//! CSS Variables
+
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --border-radius: 8px;
+}
+
+.button-custom {
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    color: white;
+}
+
+//! FLEXBOX EXPLANATION IN CSS
+
+/* Flexbox is a CSS layout module for aligning elements efficiently in rows and columns. */
+
+.container {
+    display: flex, none;
+    flex-direction: row, row-reverse, column, column-reverse;
+    justify-content: (flex-start, flex-end, center, space-between, space-around, space-evenly);
+    align-items: flex-start, flex-end, center, stretch, baseline;
+}
+
+.container {
+    flex-wrap: nowrap, wrap, wrap-reverse;
+
+    // Used only when items wrap into multiple lines (flex-wrap: wrap; ).
+    align-content: flex-start;
+    align-content: flex-end;
+    align-content: center;
+    align-content: space-between;
+    align-content: space-around;
+    align-content: space-evenly;
+}
+
+
+.item {
+    flex: 1 1 auto; // Shorthand of FLEX GROW, SHRINK, BASIS
+    align-self: flex-start, flex-end, center, stretch;
+}
+
+/* ==========================
+     11. EXAMPLE USAGE
+     ========================== */
+.example-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #222;
+    padding: 10px;
+}
+
+.example-item {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px;
+    flex: 1;
+    text-align: center;
+}
+
+
+
+// ------------------------------------------------------------------------------------
+//! --------------------------------------- SCSS---------------------------------------
+// ------------------------------------------------------------------------------------
+
+// SCSS  : CSS Preprocessor
+// SCSS Better than Sass  (in SCSS the style is inside a {}) 
+
+//  Variables → Store reusable values (colors, fonts, sizes)
+//  Nesting → Write cleaner and more readable styles
+//  Mixins → Create reusable styles like functions
+//  Partials & Imports → Organize code into smaller files
+//  Operators → Perform calculations in CSS h1 {font-size: 16px * 2;}
+//  Extend/Inheritance → Share styles between selectors
+
+// Variables & Nesting
+$primary-color: #3498db;
+$font-size: 16px;
+
+body {
+    background-color: $primary-color;
+    font-size: $font-size;
+}
+
+.button {
+    background-color: $primary-color;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+
+    a:link {
+        padding: 2rem;
+    }
+
+    &:hover {
+        background-color: darken($primary-color, 10%);
+    }
+
+    &__text_box {
+        position: sticky;
+
+    }
+}
+
+
+//! @mixin & @extend
+// Mixins are reusable styles like functions in programming.
+// Share styles between selectors.
+
+%flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin button-style($color) {
+    background-color: $color;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.primary-btn {
+    @include button-style(#3498db);
+    @extend flex-center;
+}
+
+.secondary-btn {
+    @include button-style(#e74c3c);
+}
+
+//! @function
+@function double($size) {
+    @return $size * 2;
+}
+
+h1 {
+    font-size: double(16px);
+}
+
+
+//! Responsive Design
+/* Responsive Design stellt sicher, dass Webinhalte auf einer Vielzahl von Geräten und Bildschirmgrößen gut aussehen und funktionieren. */
+/* Media Query Example: Adjusts layout for small screens */
+// MEDIA QUERY MANAGER
+/*
+0 - 600px:      Phone
+600 - 900px:    Tablet portrait
+900 - 1200px:   Tablet landscape
+[1200 - 1800] is where our normal styles apply
+1800px + :      Big desktop
+
+$breakpoint arguement choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+
+ORDER: Base + typography > general layout + grid > page layout > components
+
+1em = 16px
+*/
+@mixin respond($breakpoint) {
+    @if $breakpoint ==phone {
+        @media only screen and (max-width: 37.5em) {
+            @content
+        }
+
+        ; //600px
+    }
+
+    @if $breakpoint ==tab-port {
+        @media only screen and (max-width: 56.25em) {
+            @content
+        }
+
+        ; //900px
+    }
+
+    @if $breakpoint ==tab-land {
+        @media only screen and (max-width: 75em) {
+            @content
+        }
+
+        ; //1200px
+    }
+
+    @if $breakpoint ==big-desktop {
+        @media only screen and (min-width: 112.5em) {
+            @content
+        }
+
+        ; //1800
+    }
+}
+
+// check sass folder 
+
+//! To Compile the SCSS
+// npm init
+// npm install sass nodemon --save-dev
+
+
+// in .json
+
+
+// "scripts" : {
+//     "compile:sass" : "node-sass sass/main.scss css/style.css -w"
+//
+// there are also auto-prifix (to support all web browsers), compress
+// }
+
+
+
+
+// npm run compile:sass
+
+//! Architecture
+// 7 different folders for partial Sass files, and 1 main Sass file to import all other files into a compiled CSS stylesheet. (• base/ • components/ • layout/ • pages/ • themes/ • abstracts/ • vendors/)
